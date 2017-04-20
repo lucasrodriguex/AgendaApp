@@ -1,5 +1,6 @@
-package br.com.alura.agenda;
+package br.com.alura.agenda.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -7,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import br.com.alura.agenda.R;
 import br.com.alura.agenda.dao.UserDAO;
 import br.com.alura.agenda.helper.FormHelper;
 import br.com.alura.agenda.model.User;
@@ -20,6 +22,12 @@ public class FormActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario);
         helper = new FormHelper(this);
+
+        Intent intent = getIntent();
+        User user = (User) intent.getSerializableExtra("user");
+        if(user != null) {
+            helper.fillForm(user);
+        }
     }
 
     @Override
@@ -35,11 +43,16 @@ public class FormActivity extends AppCompatActivity {
             case R.id.menu_form_ok:
                 User user = helper.getUser();
                 UserDAO dao = new UserDAO(this);
-                dao.insert(user);
 
-                Toast.makeText(FormActivity.this,
-                        String.format("User %s Successfully Saved!!", user.getName()),
-                        Toast.LENGTH_SHORT).show();
+                if(user.getId() != null){
+                    dao.updateUser(user);
+                } else {
+                    dao.insert(user);
+                }
+                dao.close();
+                Toast.makeText(FormActivity.this
+                        ,String.format("User %s Successfully Saved!!", user.getName())
+                        ,Toast.LENGTH_SHORT).show();
 
                 finish();
                 break;

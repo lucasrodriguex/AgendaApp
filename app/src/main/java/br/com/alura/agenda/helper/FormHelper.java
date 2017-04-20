@@ -3,8 +3,8 @@ package br.com.alura.agenda.helper;
 import android.widget.EditText;
 import android.widget.RatingBar;
 
-import br.com.alura.agenda.FormActivity;
 import br.com.alura.agenda.R;
+import br.com.alura.agenda.activity.FormActivity;
 import br.com.alura.agenda.model.User;
 
 /**
@@ -13,6 +13,7 @@ import br.com.alura.agenda.model.User;
 
 public class FormHelper {
 
+    private User user;
     private EditText nameField;
     private EditText addressField;
     private EditText phoneField;
@@ -25,16 +26,25 @@ public class FormHelper {
         phoneField = (EditText) formActivity.findViewById(R.id.form_phone);
         webSiteField = (EditText) formActivity.findViewById(R.id.form_site);
         ratingField = (RatingBar) formActivity.findViewById(R.id.form_rating);
-
+        user = new User();
     }
 
     public User getUser(){
-        User user = new User(nameField.getText().toString(),
-                            addressField.getText().toString(),
-                            phoneField.getText().toString(),
-                            webSiteField.getText().toString(),
-                            Double.valueOf(ratingField.getRating()));
+        user.setName(nameField.getText().toString());
+        user.setAddress(addressField.getText().toString());
+        user.setPhone(phoneField.getText().toString());
+        user.setSite(webSiteField.getText().toString());
+        user.setRating(Double.valueOf(ratingField.getRating()));
+
         return user;
     }
 
+    public void fillForm(User user) {
+        nameField.setText(user.getName());
+        addressField.setText(user.getAddress());
+        phoneField.setText(user.getPhone());
+        webSiteField.setText(user.getSite());
+        ratingField.setRating(user.getRating().floatValue());
+        this.user = user;
+    }
 }

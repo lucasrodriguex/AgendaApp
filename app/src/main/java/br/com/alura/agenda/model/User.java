@@ -1,10 +1,12 @@
 package br.com.alura.agenda.model;
 
+import java.io.Serializable;
+
 /**
  * Created by lucas on 16/04/2017.
  */
 
-public class User {
+public class User implements Serializable {
 
     private Long id;
     private String name;
@@ -12,23 +14,6 @@ public class User {
     private String phone;
     private String site;
     private Double rating;
-
-    public User(String name, String address, String phone, String site, Double rating) {
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
-        this.site = site;
-        this.rating = rating;
-    }
-
-    public User(long id, String name, String address, String phone, String site, double rating) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
-        this.site = site;
-        this.rating = rating;
-    }
 
     public Long getId() {
         return id;

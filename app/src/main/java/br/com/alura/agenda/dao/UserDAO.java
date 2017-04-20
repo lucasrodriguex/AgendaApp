@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ public class UserDAO extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        final String QUERY_CREATE_DATABASE = "CREATE TABLE Users (id INTEGER, name TEXT NOT NULL, address TEXT, phone TEXT, site TEXT, rating REAL);";
+        final String QUERY_CREATE_DATABASE = "CREATE TABLE Users (id INTEGER PRIMARY KEY, name TEXT NOT NULL, address TEXT, phone TEXT, site TEXT, rating REAL);";
         db.execSQL(QUERY_CREATE_DATABASE);
     }
 
@@ -36,15 +37,21 @@ public class UserDAO extends SQLiteOpenHelper{
 
     public void insert(User user) {
         SQLiteDatabase db = getWritableDatabase();
-
-        ContentValues data = new ContentValues();
-        data.put("name", user.getName());
-        data.put("address", user.getAddress());
-        data.put("phone", user.getPhone());
-        data.put("site", user.getSite());
-        data.put("rating", user.getRating());
-
+        ContentValues data = getUserData(user);
         db.insert("Users", null, data);
+    }
+
+    public void delete(User user) {
+        SQLiteDatabase db = getWritableDatabase();
+        String[] params = {user.getId().toString()};
+        db.delete("Users", "id = ?", params);
+    }
+
+    public void updateUser(User user) {
+        SQLiteDatabase db = getWritableDatabase();
+        String[] params = {user.getId().toString()};
+        ContentValues userData = getUserData(user);
+        db.update("Users", userData, "id = ?", params);
     }
 
     public List<User> findUsers(){
@@ -54,20 +61,28 @@ public class UserDAO extends SQLiteOpenHelper{
 
         List<User> userList = new ArrayList<>();
         while(cursor.moveToNext()){
-            User user = new User (
-                    cursor.getLong(cursor.getColumnIndex("id")),
-                    cursor.getString(cursor.getColumnIndex("name")),
-                    cursor.getString(cursor.getColumnIndex("address")),
-                    cursor.getString(cursor.getColumnIndex("phone")),
-                    cursor.getString(cursor.getColumnIndex("site")),
-                    cursor.getDouble(cursor.getColumnIndex("rating"))
-            );
+            User user = new User();
+            user.setId(cursor.getLong(cursor.getColumnIndex("id")));
+            user.setName(cursor.getString(cursor.getColumnIndex("name")));
+            user.setAddress(cursor.getString(cursor.getColumnIndex("address")));
+            user.setPhone(cursor.getString(cursor.getColumnIndex("phone")));
+            user.setSite(cursor.getString(cursor.getColumnIndex("site")));
+            user.setRating(cursor.getDouble(cursor.getColumnIndex("rating")));
             userList.add(user);
         }
-
         cursor.close();
-
         return userList;
+    }
+
+    @NonNull
+    private ContentValues getUserData(User user) {
+        ContentValues data = new ContentValues();
+        data.put("name", user.getName());
+        data.put("address", user.getAddress());
+        data.put("phone", user.getPhone());
+        data.put("site", user.getSite());
+        data.put("rating", user.getRating());
+        return data;
     }
 
 
