@@ -1,4 +1,4 @@
-package br.com.alura.agenda.dao;
+package br.com.agenda.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,7 +10,7 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.alura.agenda.model.User;
+import br.com.agenda.model.User;
 
 /**
  * Created by lucas on 16/04/2017.

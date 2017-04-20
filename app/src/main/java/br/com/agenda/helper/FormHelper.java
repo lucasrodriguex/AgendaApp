@@ -1,11 +1,11 @@
-package br.com.alura.agenda.helper;
+package br.com.agenda.helper;
 
 import android.widget.EditText;
 import android.widget.RatingBar;
 
-import br.com.alura.agenda.R;
-import br.com.alura.agenda.activity.FormActivity;
-import br.com.alura.agenda.model.User;
+import br.com.agenda.R;
+import br.com.agenda.activity.FormActivity;
+import br.com.agenda.model.User;
 
 /**
  * Created by lucas on 16/04/2017.

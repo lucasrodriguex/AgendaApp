@@ -1,4 +1,4 @@
-package br.com.alura.agenda.activity;
+package br.com.agenda.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,9 +14,9 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import br.com.alura.agenda.R;
-import br.com.alura.agenda.dao.UserDAO;
-import br.com.alura.agenda.model.User;
+import br.com.agenda.R;
+import br.com.agenda.dao.UserDAO;
+import br.com.agenda.model.User;
 
 public class UserListActivity extends AppCompatActivity {
 

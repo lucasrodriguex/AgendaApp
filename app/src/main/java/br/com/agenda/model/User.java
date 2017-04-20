@@ -1,4 +1,4 @@
-package br.com.alura.agenda.model;
+package br.com.agenda.model;
 
 import java.io.Serializable;
 
